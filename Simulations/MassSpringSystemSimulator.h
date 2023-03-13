@@ -36,6 +36,7 @@ public:
 	Vec3 getPositionOfMassPoint(int index);
 	Vec3 getVelocityOfMassPoint(int index);
 	void applyExternalForce(Vec3 force);
+	void calculateSpringForce(const std::vector<Vec3>& positions);
 	
 	// Do Not Change
 	void setIntegrator(int integrator) {
@@ -48,11 +49,20 @@ private:
 	float m_fStiffness;
 	float m_fDamping;
 	int m_iIntegrator;
+	float m_flength;
+	float m_ballSize;
 
 	// UI Attributes
 	Vec3 m_externalForce;
 	Point2D m_mouse;
 	Point2D m_trackmouse;
 	Point2D m_oldtrackmouse;
+
+	// test a ball fall
+	int m_numOfBall;
+	std::vector<Vec3> m_ballPos;
+	std::vector<Vec3> m_ballVec;
+	std::vector<Vec3> m_ballForce;
+	std::vector<std::vector<int>> m_relation;
 };
 #endif
