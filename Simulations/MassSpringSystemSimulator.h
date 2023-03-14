@@ -1,6 +1,7 @@
 #ifndef MASSSPRINGSYSTEMSIMULATOR_h
 #define MASSSPRINGSYSTEMSIMULATOR_h
 #include "Simulator.h"
+#include "stdio.h"
 
 // Do Not Change
 #define EULER 0

@@ -14,9 +14,9 @@ MassSpringSystemSimulator::MassSpringSystemSimulator() {
 	m_ballSize = 0.01f;
 
 	m_ballPos.push_back(Vec3(0, 0, 0));
-	m_ballVec.push_back(Vec3(0, 0, 0));
-	m_ballPos.push_back(Vec3(0, 1.1, 0));
-	m_ballVec.push_back(Vec3(0, 0, 0));
+	m_ballVec.push_back(Vec3(-1, 0, 0));
+	m_ballPos.push_back(Vec3(0, 2, 0));
+	m_ballVec.push_back(Vec3(1, 0, 0));
 
 	m_numOfBall = m_ballPos.size();
 
@@ -47,6 +47,14 @@ void MassSpringSystemSimulator::drawFrame(ID3D11DeviceContext* pd3dImmediateCont
 		DUC->setUpLighting(Vec3(), 0.4 * Vec3(1, 1, 1), 100, 0.6 * Vec3(1, 1, 1));
 		DUC->drawSphere(pos, Vec3(m_ballSize, m_ballSize, m_ballSize));
 	}
+	DUC->beginLine();
+	for (int i = 0; i < m_relation.size(); i++) {
+		for (const auto& idx : m_relation[i]) {
+			if (idx <= i) continue;
+			DUC->drawLine(m_ballPos[i], Vec3(1, 1, 1), m_ballPos[idx], Vec3(1, 1, 1));
+		}
+	}
+	DUC->endLine();
 };
 
 void MassSpringSystemSimulator::notifyCaseChanged(int testCase){
@@ -101,6 +109,10 @@ void MassSpringSystemSimulator::simulateTimestep(float timeStep){
 	default:
 		break;
 	}
+	for (int i = 0; i < m_numOfBall; i++) {
+		printf("info of particle %d:\n", i);
+		printf("  position = (%f, %f, %f), velocity = (%f, %f, %f)\n", m_ballPos[i].x, m_ballPos[i].y, m_ballPos[i].z, m_ballVec[i].x, m_ballVec[i].y, m_ballVec[i].z);
+	}
 };
 
 void MassSpringSystemSimulator::calculateSpringForce(const std::vector<Vec3>& positions) {
@@ -111,6 +123,7 @@ void MassSpringSystemSimulator::calculateSpringForce(const std::vector<Vec3>& po
 			float len = 0;
 			for (int j = 0; j < 3; j++) len += dist[j] * dist[j];
 			len = sqrt(len);
+			//cout << len << endl;
 			m_ballForce[i] += m_fStiffness * (len - m_flength) * dist / len;
 		}
 	}
