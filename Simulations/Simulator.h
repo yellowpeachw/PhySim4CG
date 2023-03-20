@@ -20,10 +20,13 @@ class Simulator{
 public:
 	// Attributes
 	int m_iTestCase;
+	int m_iMethodCase;
+	float g;
 	DrawingUtilitiesClass * DUC;
 	// Functions
 	
 	virtual const char * getTestCasesStr() = 0;
+	virtual const char* getMethodCasesStr() = 0;
 
 	virtual void reset() = 0;
 	
@@ -57,6 +60,7 @@ public:
 	**for more info on how to use this function take a look at the template simulator 
 	*/
 	virtual void notifyCaseChanged(int testCase) = 0;
+	virtual void notifyMethodChanged(int methodCase) = 0;
 
 	/*
 	this function is used to receive the input from the mouse
@@ -69,7 +73,8 @@ public:
 	input x,y: the mouse position in pixels
 	*/
 	virtual void onMouse(int x, int y) = 0;
-
+	bool usingEuler;
+	virtual void changeMethod() = 0;
 };
 
 #endif

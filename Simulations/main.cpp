@@ -58,6 +58,9 @@ void initTweakBar(){
 	TwDefine(" TweakBar color='0 128 128' alpha=128 ");
 	TwType TW_TYPE_TESTCASE = TwDefineEnumFromString("Test Scene", g_pSimulator->getTestCasesStr());
 	TwAddVarRW(g_pDUC->g_pTweakBar, "Test Scene", TW_TYPE_TESTCASE, &g_iTestCase, "");
+
+	TwType TW_TYPE_METHODCASE = TwDefineEnumFromString("Test Method", g_pSimulator->getMethodCasesStr());
+	TwAddVarRW(g_pDUC->g_pTweakBar, "Test Method", TW_TYPE_METHODCASE, &g_pSimulator->m_iMethodCase, "");
 	// HINT: For buttons you can directly pass the callback function as a lambda expression.
 	TwAddButton(g_pDUC->g_pTweakBar, "Reset Scene", [](void * s){ g_iPreTestCase = -1; }, nullptr, "");
 	TwAddButton(g_pDUC->g_pTweakBar, "Reset Camera", [](void * s){g_pDUC->g_camera.Reset();}, nullptr,"");
@@ -65,6 +68,7 @@ void initTweakBar(){
 	TwAddVarRW(g_pDUC->g_pTweakBar, "RunStep", TW_TYPE_BOOLCPP, &g_bSimulateByStep, "");
 	TwAddVarRW(g_pDUC->g_pTweakBar, "Draw Simulation",  TW_TYPE_BOOLCPP, &g_bDraw, "");
 	TwAddVarRW(g_pDUC->g_pTweakBar, "Timestep", TW_TYPE_FLOAT, &g_fTimestep, "step=0.0001 min=0.0001");
+	TwAddVarRW(g_pDUC->g_pTweakBar, "Gravity", TW_TYPE_FLOAT, &g_pSimulator->g, "");
 #ifdef ADAPTIVESTEP
 	TwAddVarRW(g_pDUC->g_pTweakBar, "Time Factor", TW_TYPE_FLOAT, &g_fTimeFactor, "step=0.01   min=0.01");
 #endif
