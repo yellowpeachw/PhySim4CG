@@ -8,7 +8,7 @@
 #define LEAPFROG 1
 #define MIDPOINT 2
 // Do Not Change
-
+#define COMPLEX 3
 
 class MassSpringSystemSimulator:public Simulator{
 public:
@@ -44,6 +44,10 @@ public:
 		m_iIntegrator = integrator;
 	}
 
+	// init function
+	void initNaieve();
+	void initComplex();
+
 private:
 	// Data Attributes
 	float m_fMass;
@@ -52,6 +56,7 @@ private:
 	int m_iIntegrator;
 	float m_flength;
 	float m_ballSize;
+	Vec3 gravity;
 
 	// UI Attributes
 	Vec3 m_externalForce;
@@ -65,5 +70,8 @@ private:
 	std::vector<Vec3> m_ballVec;
 	std::vector<Vec3> m_ballForce;
 	std::vector<std::vector<int>> m_relation;
+
+	// for print
+	bool m_print;
 };
 #endif
