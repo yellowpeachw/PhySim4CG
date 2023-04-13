@@ -39,6 +39,8 @@ public:
 	void setOrientationOf(int i,Quat orientation);
 	void setVelocityOf(int i, Vec3 velocity);
 
+	void initDemo();
+
 private:
 	// Attributes
 	// add your RigidBodySystem data members, for e.g.,
@@ -49,5 +51,23 @@ private:
 	Point2D m_mouse;
 	Point2D m_trackmouse;
 	Point2D m_oldtrackmouse;
+
+	struct Rect {
+		Vec3 center;
+		Vec3 shape;
+		Quat q;
+		Vec3 omega;
+		Vec3 velocity;
+		Mat4 inertia;
+		float mass;
+		void initInertia() {
+			inertia.initScaling(1.0 / 12 * mass * (shape.y * shape.y + shape.z * shape.z), 1.0 / 12 * mass * (shape.x * shape.x + shape.z * shape.z), 1.0 / 12 * mass * (shape.y * shape.y + shape.x * shape.x));
+		}
 	};
+	std::vector<Rect> rects;
+
+	void addExternalForces(float timeStep);
+	void updatePosition(float timeStep);
+	bool print;
+};
 #endif
